@@ -116,7 +116,7 @@ class GameStatus extends React.Component<Props> { // eslint-disable-line react/p
       }
       case SHOW_SCORES: {
         if (this.props.renderShowScores) {
-          const scores = getScores(this.props.game.players, this.props.game.scores);
+          const scores = getScores(this.props.game.players, this.props.game.scores, this.props.game.displayScoresOnProjector);
           return this.props.renderShowScores && this.props.renderShowScores(scores);
         }
         return this.props.renderGameOver();

@@ -9,7 +9,6 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import type { Dispatch } from 'redux';
-import { Table } from 'react-bootstrap';
 
 import TeamStatus from '../../components/TeamStatus';
 import type { GameStatusScore } from '../../components/GameStatus';
@@ -116,40 +115,15 @@ export class ProjectorPage extends React.PureComponent<Props, State> {
   }
 
   renderShowScores(scores: Array<GameStatusScore>) {
-    let previousScore = 0;
-    let previousRank = 0;
     return (
       <div style={{ fontSize: 40 }}>
         <p style={{ fontSize: 80 }}>Final Scores</p>
-        <Table striped bordered condensed hover>
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Player</th>
-              <th>Score</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              scores && scores.map((value, index) => {
-                let rank = index;
-                if (value.points === previousScore) {
-                  rank = previousRank;
-                } else {
-                  previousRank = index;
-                  previousScore = value.points;
-                }
-                return (
-                  <tr key={value.playerName}>
-                    <td>{rank + 1}</td>
-                    <td>{value.playerName}</td>
-                    <td>{value.points}</td>
-                  </tr>
-                );
-              })
-            }
-          </tbody>
-        </Table>
+        <TeamStatus
+          style={{ width: '50%' }}
+          players={this.props.game.players}
+          scorePoints={scores}
+          displayScoresOnProjector={this.props.game.displayScoresOnProjector}
+        />
       </div>
     );
   }
